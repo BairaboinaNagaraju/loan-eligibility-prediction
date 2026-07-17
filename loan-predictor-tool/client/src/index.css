@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #030712;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.glass-card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent;
+}
+
+.input-field {
+  @apply w-full px-3 py-2 rounded-lg border bg-slate-900/50 border-white/10 text-white placeholder-slate-500
+         focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm transition-all;
+}
+
+.slider-accent {
+  @apply h-1.5 rounded-full appearance-none cursor-pointer accent-blue-500 bg-slate-800;
+}

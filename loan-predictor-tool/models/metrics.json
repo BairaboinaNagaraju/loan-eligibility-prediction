@@ -1,0 +1,86 @@
+{
+  "best_model": "Random Forest",
+  "results": {
+    "Logistic Regression": {
+      "accuracy": 0.895,
+      "precision": 0.9314,
+      "recall": 0.9372,
+      "f1_score": 0.9343,
+      "roc_auc": 0.9417
+    },
+    "Decision Tree": {
+      "accuracy": 0.8767,
+      "precision": 0.9529,
+      "recall": 0.8891,
+      "f1_score": 0.9199,
+      "roc_auc": 0.9116
+    },
+    "Random Forest": {
+      "accuracy": 0.9167,
+      "precision": 0.9315,
+      "recall": 0.9665,
+      "f1_score": 0.9487,
+      "roc_auc": 0.9557
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.9133,
+      "precision": 0.9494,
+      "recall": 0.9414,
+      "f1_score": 0.9454,
+      "roc_auc": 0.9609
+    },
+    "XGBoost": {
+      "accuracy": 0.9067,
+      "precision": 0.9547,
+      "recall": 0.9268,
+      "f1_score": 0.9406,
+      "roc_auc": 0.9634
+    }
+  },
+  "feature_importance": {
+    "age": 0.010364381813505553,
+    "gender": 0.0021543953792791753,
+    "married": 0.001030624706173753,
+    "education": 0.0013393349174293365,
+    "self_employed": 0.000424232682812345,
+    "annual_income": 0.03971372805070464,
+    "monthly_income": 0.048331634020220095,
+    "monthly_expenses": 0.02575625736098023,
+    "savings": 0.06432386786576617,
+    "investments": 0.017006921358608554,
+    "active_loans": 0.05492985061490782,
+    "existing_loan_amount": 0.01961730837383184,
+    "existing_emi": 0.037560688726631146,
+    "credit_card_outstanding": 0.016484218318949462,
+    "credit_score": 0.21572822748016954,
+    "requested_loan": 0.12666206130126992,
+    "loan_tenure": 0.021536499611073293,
+    "interest_rate": 0.012603376445946805,
+    "loan_purpose": 0.005196531598645706,
+    "dti": 0.25891940993934326,
+    "credit_util": 0.020316449433751355
+  },
+  "feature_cols": [
+    "age",
+    "gender",
+    "married",
+    "education",
+    "self_employed",
+    "annual_income",
+    "monthly_income",
+    "monthly_expenses",
+    "savings",
+    "investments",
+    "active_loans",
+    "existing_loan_amount",
+    "existing_emi",
+    "credit_card_outstanding",
+    "credit_score",
+    "requested_loan",
+    "loan_tenure",
+    "interest_rate",
+    "loan_purpose",
+    "dti",
+    "credit_util"
+  ]
+}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Loan Eligibility Predictor</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+      border-bottom: 2px solid #eaeaea;
+      padding-bottom: 10px;
+      color: #111;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    input[type="number"], select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: #0066cc;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    button {
+      background-color: #0066cc;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0052a3;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    #result-box {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 6px;
+      display: none;
+    }
+    .approved {
+      background-color: #e6f4ea;
+      border: 1px solid #34a853;
+      color: #137333;
+    }
+    .rejected {
+      background-color: #fce8e6;
+      border: 1px solid #ea4335;
+      color: #c5221f;
+    }
+    .result-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 13px;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    .error-message {
+      background-color: #fce8e6;
+      border: 1px solid #ea4335;
+      color: #c5221f;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 20px;
+      display: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Basic Loan Eligibility Predictor</h1>
+    
+    <form id="predictor-form" onsubmit="submitForm(event)">
+      <div class="grid">
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="married">Married</label>
+          <select id="married">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label for="dependents">Dependents</label>
+          <select id="dependents">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3+">3+</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="education">Education</label>
+          <select id="education">
+            <option value="Graduate">Graduate</option>
+            <option value="Not Graduate">Not Graduate</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label for="self_employed">Self Employed</label>
+          <select id="self_employed">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="credit_history">Credit History</label>
+          <select id="credit_history">
+            <option value="1.0">Good (No defaults)</option>
+            <option value="0.0">Bad / None (Past defaults)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="applicant_income">Applicant Monthly Income ($)</label>
+        <input type="number" id="applicant_income" min="0" value="5000" required>
+      </div>
+
+      <div class="form-group">
+        <label for="coapplicant_income">Co-applicant Monthly Income ($)</label>
+        <input type="number" id="coapplicant_income" min="0" value="1500" required>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label for="loan_amount">Loan Amount Requested ($ Thousands)</label>
+          <input type="number" id="loan_amount" min="1" value="150" required>
+          <span style="font-size: 11px; color: #666;">e.g., 150 = $150k</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="loan_amount_term">Loan Term (Months)</label>
+          <select id="loan_amount_term">
+            <option value="360">360 (30 Years)</option>
+            <option value="240">240 (20 Years)</option>
+            <option value="180">180 (15 Years)</option>
+            <option value="120">120 (10 Years)</option>
+            <option value="60">60 (5 Years)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="property_area">Property Area</label>
+        <select id="property_area">
+          <option value="Semiurban">Semiurban</option>
+          <option value="Urban">Urban</option>
+          <option value="Rural">Rural</option>
+        </select>
+      </div>
+
+      <button type="submit" id="submit-btn">Predict Eligibility</button>
+    </form>
+
+    <div id="error-box" class="error-message"></div>
+
+    <div id="result-box">
+      <div id="result-text" class="result-title"></div>
+      
+      <p style="margin: 10px 0 5px 0; font-weight: bold; font-size: 14px;">Decision Factors:</p>
+      <ul id="reasons-list"></ul>
+
+      <p style="margin: 15px 0 5px 0; font-weight: bold; font-size: 14px;">Actionable Recommendations:</p>
+      <ul id="recommendations-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    async function submitForm(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('submit-btn');
+      const resultBox = document.getElementById('result-box');
+      const errorBox = document.getElementById('error-box');
+      
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Calculating...';
+      resultBox.style.display = 'none';
+      errorBox.style.display = 'none';
+
+      const payload = {
+        gender: document.getElementById('gender').value,
+        married: document.getElementById('married').value,
+        dependents: document.getElementById('dependents').value,
+        education: document.getElementById('education').value,
+        self_employed: document.getElementById('self_employed').value,
+        applicant_income: parseFloat(document.getElementById('applicant_income').value),
+        coapplicant_income: parseFloat(document.getElementById('coapplicant_income').value),
+        loan_amount: parseFloat(document.getElementById('loan_amount').value),
+        loan_amount_term: parseFloat(document.getElementById('loan_amount_term').value),
+        credit_history: parseFloat(document.getElementById('credit_history').value),
+        property_area: document.getElementById('property_area').value
+      };
+
+      try {
+        const response = await fetch('http://localhost:8000/api/loans/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('API returned an error response.');
+        }
+
+        const data = await response.json();
+        
+        // Show result box
+        resultBox.style.display = 'block';
+        if (data.prediction === 'Approved') {
+          resultBox.className = 'approved';
+          document.getElementById('result-text').innerText = `LOAN APPROVED (Confidence: ${Math.round(data.confidence_score * 100)}%)`;
+        } else {
+          resultBox.className = 'rejected';
+          document.getElementById('result-text').innerText = `LOAN REJECTED (Confidence: ${Math.round(data.confidence_score * 100)}%)`;
+        }
+
+        // Render reasons
+        const reasonsList = document.getElementById('reasons-list');
+        reasonsList.innerHTML = '';
+        data.reasons.forEach(r => {
+          const li = document.createElement('li');
+          li.innerText = `[${r.impact.toUpperCase()}] ${r.factor}: ${r.detail}`;
+          reasonsList.appendChild(li);
+        });
+
+        // Render recommendations
+        const recList = document.getElementById('recommendations-list');
+        recList.innerHTML = '';
+        if (data.recommendations && data.recommendations.length > 0) {
+          data.recommendations.forEach(r => {
+            const li = document.createElement('li');
+            li.innerText = r;
+            recList.appendChild(li);
+          });
+        } else {
+          const li = document.createElement('li');
+          li.innerText = 'Profile is optimal. No recommendations needed.';
+          recList.appendChild(li);
+        }
+
+      } catch (err) {
+        errorBox.innerText = 'Error: Failed to contact the AI model backend. Make sure the server on http://localhost:8000 is running.';
+        errorBox.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Predict Eligibility';
+      }
+    }
+  </script>
+</body>
+</html>

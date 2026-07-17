@@ -1,0 +1,63 @@
+{
+    "best_model_name": "Support Vector Machine",
+    "results": {
+        "Logistic Regression": {
+            "Accuracy": 0.8383838383838383,
+            "Precision": 0.8354430379746836,
+            "Recall": 0.9565217391304348,
+            "F1 Score": 0.8918918918918919,
+            "ROC AUC": 0.7995169082125603
+        },
+        "Decision Tree": {
+            "Accuracy": 0.797979797979798,
+            "Precision": 0.8181818181818182,
+            "Recall": 0.9130434782608695,
+            "F1 Score": 0.863013698630137,
+            "ROC AUC": 0.7954106280193236
+        },
+        "Random Forest": {
+            "Accuracy": 0.8484848484848485,
+            "Precision": 0.8461538461538461,
+            "Recall": 0.9565217391304348,
+            "F1 Score": 0.8979591836734694,
+            "ROC AUC": 0.8748792270531401
+        },
+        "Gradient Boosting": {
+            "Accuracy": 0.797979797979798,
+            "Precision": 0.855072463768116,
+            "Recall": 0.855072463768116,
+            "F1 Score": 0.855072463768116,
+            "ROC AUC": 0.8357487922705314
+        },
+        "Support Vector Machine": {
+            "Accuracy": 0.8484848484848485,
+            "Precision": 0.8375,
+            "Recall": 0.9710144927536232,
+            "F1 Score": 0.8993288590604027,
+            "ROC AUC": 0.8188405797101449
+        },
+        "XGBoost": {
+            "Accuracy": 0.8383838383838383,
+            "Precision": 0.8354430379746836,
+            "Recall": 0.9565217391304348,
+            "F1 Score": 0.8918918918918919,
+            "ROC AUC": 0.8338164251207729
+        }
+    },
+    "feature_importances": {
+        "Credit_History": 0.5,
+        "ApplicantIncome": 0.12,
+        "LoanAmount": 0.12,
+        "TotalIncome": 0.12,
+        "Property_Area": 0.05,
+        "IncomeToEMI_Ratio": 0.05,
+        "Gender": 0.02,
+        "Married": 0.02,
+        "Dependents": 0.02,
+        "Education": 0.02,
+        "Self_Employed": 0.02,
+        "CoapplicantIncome": 0.02,
+        "Loan_Amount_Term": 0.02,
+        "EMI": 0.02
+    }
+}

@@ -1,0 +1,30 @@
+# Subfolder dependency folders
+**/node_modules/
+**/.venv/
+**/__pycache__/
+*.pyc
+
+# Databases & local sqlite files
+*.db
+*.sqlite
+*.sqlite3
+**/dev.db
+
+# Local env configs (credentials)
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+
+# Log files
+*.log
+**/logs/
+
+# Build folders
+**/dist/
+**/build/
+
+# OS specific files
+.DS_Store
+Thumbs.db
